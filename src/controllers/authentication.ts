@@ -11,7 +11,11 @@ export const register = async (req: express.Request, res: express.Response) => {
       return res.sendStatus(400)
     }
 
-    const existingUser = await getUsersByEmail(email)
+    const existingUser = await getUsersByEmail(email);
+
+    if(existingUser) {
+      return res.sendStatus(400)
+    }
 
     const salt = random();
     const user = await createUser({
